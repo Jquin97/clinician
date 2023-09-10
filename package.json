@@ -1,0 +1,17 @@
+{
+  "name": "comp9034_devops",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:ui": "npm run start --prefix frontend",
+    "build:ui": "npm run build --prefix frontend",
+    "install:ui": "npm install --prefix frontend",
+    "install:api": "npm install --prefix backend",
+    "start:api": "npm run server --prefix backend",
+    "stop:api": "npm run server:stop --prefix backend"
+  },
+  "keywords": [],
+  "author": "Suprim",
+  "license": "ISC"
+}
