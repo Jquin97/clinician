@@ -14,6 +14,7 @@ import QueryProvider from '../../core/api/query';
 import PatientDetails from '../pages/patientDetails/patientDetails';
 import PatientAction from '../pages/patientAction/patientAction';
 import Appointment from '../pages/appointment/appointment';
+import TestResult from '../pages/testResult/testResult';
 import ScanResult from '../pages/scanResult/scanResult';
 
 const RouteConfig = () => {
@@ -46,6 +47,7 @@ const RouteConfig = () => {
                 path="/dashboard/patients/:id/edit"
                 element={<ProtectedRoute element={<PatientAction />} />}></Route>
               <Route exact path="/dashboard/appointment" element={<Appointment />} />
+              <Route exact path="/dashboard/test-result/:id" element={<TestResult />} />
               <Route exact path="/dashboard/scan-result/:id" element={<ScanResult />} />
             </Routes>
           </Router>

@@ -32,7 +32,7 @@ const PatientLists = () => {
   return (
     //TODO: Follow protocol use react fragment
     <div>
-      <DashboardLayout>
+      <DashboardLayout showSider={true}>
         <Divider orientation="center">Patient Details</Divider>
         <div className={styles.detailsContainer}>
           <div className={styles.detailsHeader}>

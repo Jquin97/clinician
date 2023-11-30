@@ -32,7 +32,6 @@ const editPatientByID = (data) => {
 const getScanResults = (patientId) => {
   return protectedapiClient.get(`/scans/${patientId}`);
 };
-
 const addScanResults = (patientId, formData) => {
   return fetch(`${API_URLS.SCAN_RESULT}/${patientId}`, {
     method: 'POST',
@@ -42,9 +41,19 @@ const addScanResults = (patientId, formData) => {
     },
   });
 };
-
 const deleteScanResults = (id) => {
   return protectedapiClient.delete(`/scans/${id}`);
+};
+
+// Test Results
+const getTestResults = (patientId) => {
+  return protectedapiClient.get(`/test/${patientId}`);
+};
+const addTestResults = (patientId, data) => {
+  return protectedapiClient.post(`/test/${patientId}`, data);
+};
+const deleteTestResults = (id) => {
+  return protectedapiClient.delete(`/test/${id}`);
 };
 
 export {
@@ -57,6 +66,9 @@ export {
   addScanResults,
   deleteScanResults,
   getPatientsByName,
+  getTestResults,
+  addTestResults,
+  deleteTestResults,
 };
 
 export default QueryProvider;

@@ -13,12 +13,17 @@ const { sequelize } = require("./models");
 const routes = require("./routes/routes");
 
 // MIDDELWARES
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
 const limiter = ratelimit({
   max: 1000,
   windowMs: 60 * 60 * 1000,
   message: "Too many request, Please try again later.",
 });
+
 app.use("/api", limiter);
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
@@ -30,10 +35,12 @@ app.use(
     optionsSuccessStatus: 204,
   })
 );
+// Express Static Files
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Dev Logs
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-
 // Routes
 app.get("/", (_, res) => {
   res.send(

@@ -6,7 +6,7 @@ import HeaderComponent from '../components/header/header';
 import FooterComponent from '../components/footer/footer';
 import { Link, useLocation, useParams } from 'react-router-dom';
 
-const DashboardLayout = ({ children, showBreadcrumbs = true }) => {
+const DashboardLayout = ({ children, showBreadcrumbs = true, showSider = false }) => {
   const location = useLocation();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   const params = useParams();
@@ -17,6 +17,7 @@ const DashboardLayout = ({ children, showBreadcrumbs = true }) => {
     '/dashboard/patients': 'Patients',
     '/dashboard/appointment': 'Appointment',
     '/dashboard/patients/:id/details': 'Patients Detail',
+    '/dashboard/test-result': 'Test Result',
     '/dashboard/scan-result': 'Scan Result',
   };
 
@@ -41,14 +42,16 @@ const DashboardLayout = ({ children, showBreadcrumbs = true }) => {
     <main className="app_dashboard">
       <HeaderComponent />
       <Layout>
-        <Sider width={200}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            style={{ height: '100%', borderRight: 0 }}
-          />
-        </Sider>
+        {showSider && (
+          <Sider width={200}>
+            <Menu
+              mode="inline"
+              defaultSelectedKeys={['1']}
+              defaultOpenKeys={['sub1']}
+              style={{ height: '100%', borderRight: 0 }}
+            />
+          </Sider>
+        )}
         <Layout className="dashboard_layout__inner">
           {showBreadcrumbs && (
             <>
@@ -57,7 +60,6 @@ const DashboardLayout = ({ children, showBreadcrumbs = true }) => {
                 items={breadcrumbItems}></Breadcrumb>
             </>
           )}
-
           <Content className="dashboard_layout__content">{children}</Content>
         </Layout>
       </Layout>

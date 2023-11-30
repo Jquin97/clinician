@@ -126,16 +126,15 @@ const addPatientResults = async (req, res) => {
         message: "Patient ID not found",
       });
     }
-
-    const { type, note } = req.body.data;
+    const { type, note } = req.body;
     if (!type || !note) {
       return res.send({
         success: false,
         message: "Missing required fields",
       });
     }
-    req.body.data.PatientId = patientID;
-    const addTestResult = await TestResult.create(req.body.data);
+    req.body.PatientId = patientID;
+    const addTestResult = await TestResult.create(req.body);
     res.send({
       success: true,
       data: addTestResult,

@@ -1,9 +1,4 @@
-import {
-  UserOutlined,
-  PlusOutlined,
-  ExclamationCircleFilled,
-  UploadOutlined,
-} from '@ant-design/icons';
+import { UserOutlined, PlusOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import React, { useEffect, useState } from 'react';
 import {
@@ -16,27 +11,16 @@ import {
   Form,
   Modal,
   Input,
-  Upload,
   Drawer,
 } from 'antd';
-import styles from './scanResult.module.css';
+import styles from './testResult.module.css';
 import { useParams } from 'react-router-dom';
 import {
-  addScanResults,
-  deleteScanResults,
+  addTestResults,
+  deleteTestResults,
   getPatientByID,
-  getScanResults,
+  getTestResults,
 } from '../../../core/api/query';
-import openNotification from '../../components/notifications';
-import { API_BASE_URL } from '../../../core/config/apiConfig';
-const props = {
-  action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-  onChange({ file, fileList }) {
-    if (file.status !== 'uploading') {
-      console.log(file, fileList);
-    }
-  },
-};
 
 const TestResult = () => {
   const { id } = useParams();
@@ -44,19 +28,36 @@ const TestResult = () => {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const { confirm } = Modal;
-  const [patientDetails, setPatientDetails] = useState({});
   const [appId, setAppId] = useState(3);
   const [data, setData] = useState([]);
+  const [patientsData, setPatientDetails] = useState({});
   const [open, setOpen] = useState(false);
+  // Setup data
+  // const patientsData = {
+  //   patientID: 1,
+  //   firstName: 'Gojo',
+  //   lastName: 'Satoru',
+  //   DOB: '10-03-2017',
+  //   gender: 'Male',
+  //   phone: ' 0422781719',
+  // };
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const onClose = () => {
-    setOpen(false);
-  };
-
+  // [
+  //   {
+  //     id: 1,
+  //     key: 1,
+  //     date: '15-01-2021',
+  //     result: 'Positive with Covid-19',
+  //     note: 'Headache, cough, runny nose',
+  //   },
+  //   {
+  //     id: 2,
+  //     key: 2,
+  //     date: '12-03-2022',
+  //     result: 'Flu',
+  //     note: 'Fever, runny nose',
+  //   },
+  // ]
   const columns = [
     {
       title: 'Date',
@@ -65,37 +66,21 @@ const TestResult = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Attachments',
-      dataIndex: 'attachments',
-      key: 'attachments',
-      render: (text) => (
-        <a
-          href={`${API_BASE_URL}/uploads/${
-            text.toString().split('/')[text.toString().split('/').length - 1]
-          }`}
-          aria-label="Go to image">
-          <img
-            width={40}
-            height={40}
-            src={`${API_BASE_URL}/uploads/${
-              text.toString().split('/')[text.toString().split('/').length - 1]
-            }`}
-            alt={text.toString().split('/')[text.toString().split('/').length - 1]}
-          />
-        </a>
-      ),
+      title: 'Result',
+      dataIndex: 'result',
+      key: 'result',
     },
-    // {
-    //   title: 'Note',
-    //   dataIndex: 'note',
-    //   key: 'note',
-    //   //   editable: true,
-    // },
+    {
+      title: 'Note',
+      dataIndex: 'note',
+      key: 'note',
+    },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
+          <Button>Edit</Button>
           <Button danger onClick={() => handleDelete(record.id)}>
             Delete
           </Button>
@@ -103,7 +88,12 @@ const TestResult = () => {
       ),
     },
   ];
-
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   //Delete result
   const handleDelete = (key) => {
     confirm({
@@ -113,8 +103,8 @@ const TestResult = () => {
       okType: 'danger',
       cancelText: 'No',
       async onOk() {
-        const der = await deleteScanResults(key);
-        if (der) {
+        const deletres = await deleteTestResults(key);
+        if (deletres.data.success === true) {
           const newData = data.filter((item) => item.id !== key);
           setData(newData);
         }
@@ -126,28 +116,24 @@ const TestResult = () => {
   };
 
   const onFinish = async (values) => {
+    values['date'] = values.date.format('DD-MM-YYYY');
     const newData = {
-      key: appId,
-      date: `${values.date}`,
-      attachments: `${values.attachments.name}`,
+      type: `${values.date}`,
+      resultFile: `${values.result}`,
       note: `${values.note}`,
     };
-
-    const payloadData = new FormData();
-    payloadData.append('files', values.attachments);
-    addScanResults(id, payloadData).then((res) => {
-      console.log(res.data);
+    addTestResults(id, newData).then((res) => {
+      if (res.data.success === true) {
+        setOpen(false);
+        form.resetFields();
+        setData([...data, newData]);
+        setAppId(appId + 1);
+      }
     });
-
-    setData([...data, newData]);
-    setAppId(appId + 1);
-    // Close Model
-    setOpen(false);
   };
-
-  // Get Patient And Scan Results
+  // Get Patient And Test Results
   useEffect(() => {
-    getScanResults(id).then((res) => {
+    getTestResults(id).then((res) => {
       if (res?.data) {
         if (res.data.results && res.data.results.length > 0) {
           setData(
@@ -156,7 +142,8 @@ const TestResult = () => {
                 id: item.id,
                 patiendId: item.PatientId,
                 date: item.createdAt,
-                attachments: item.attachments,
+                result: item.resultFile,
+                note: item.note,
               };
             })
           );
@@ -176,7 +163,7 @@ const TestResult = () => {
   return (
     <DashboardLayout showSider={true}>
       <div className="App">
-        <Title className={styles.title}>Scan Results </Title>
+        <Title className={styles.title}>Test Results</Title>
         <div className={styles.patientInfo}>
           <div className={styles.patientAva}>
             <Space align="center" direction="vertical" wrap size={16}>
@@ -185,24 +172,29 @@ const TestResult = () => {
           </div>
           <div className={styles.patientDetail}>
             <Title level={3}>
-              {patientDetails.firstName} {patientDetails.lastName}
+              {patientsData.firstName} {patientsData.lastName}
             </Title>
-            <Text>DOB: {patientDetails.DOB}</Text> <br></br>
-            <Text>Gender: {patientDetails.gender}</Text> <br></br>
-            <Text>Phone: {patientDetails.phone}</Text>
+            <Text>DOB: {patientsData.DOB}</Text> <br></br>
+            <Text>Gender: {patientsData.gender}</Text> <br></br>
+            <Text>Phone: {patientsData.phone}</Text>
           </div>
-          <Button type="primary" className={styles.addBtn} primary onClick={showDrawer}>
-            <PlusOutlined /> Add Scan Result
+          <Button type="primary" className={styles.addBtn} primary onClick={() => showDrawer()}>
+            <PlusOutlined /> Add Test Result
           </Button>
         </div>
       </div>
+
       {/* Result detail */}
       <div className="appDetail">
         <Table columns={columns} dataSource={data} />
       </div>
+
+      {/* Add result */}
+      <div className={styles.addApp}></div>
+
       {/* Add result */}
       <Drawer
-        title="Add new scan results"
+        title="Add new test results"
         width={720}
         onClose={onClose}
         open={open}
@@ -227,30 +219,12 @@ const TestResult = () => {
             <DatePicker />
           </Form.Item>
           <Form.Item
-            label="Upload scan"
-            name="attachments"
-            valuePropName="file"
-            getValueFromEvent={(event) => {
-              return event?.file;
-            }}
+            label="Result"
+            name="result"
             rules={[{ required: true, message: 'Result is required' }]}>
-            <Upload
-              {...props}
-              listType="picture"
-              beforeUpload={(file) => {
-                console.log(file);
-                return false;
-              }}
-              customRequest={(info) => {
-                setFileList([info.files]);
-              }}>
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
+            <Input placeholder="Basic usage" />
           </Form.Item>
-          <Form.Item
-            label="Note"
-            name="note"
-            rules={[{ required: true, message: 'Note is required' }]}>
+          <Form.Item label="Note" name="note">
             <TextArea rows={4} />
           </Form.Item>
         </Form>

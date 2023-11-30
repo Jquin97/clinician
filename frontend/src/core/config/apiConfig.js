@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let API_BASE_URL = 'http://localhost:5000';
+export let API_BASE_URL = 'http://localhost:5000';
 if (process.env.REACT_APP_ENV === 'development') {
   API_BASE_URL = process.env.REACT_APP_DEV_API_BASE_URL;
 } else if (process.env.REACT_APP_ENV === 'production') {
@@ -15,6 +15,7 @@ const API_URLS = {
   RESET_PASSWORD: base + '/auth/resetPassword',
   VERIFY_TOKEN: base + '/auth/verifyToken',
   SCAN_RESULT: base + '/scans',
+  TEST_RESULT: base + '/patientResults',
 };
 
 const apiClient = axios.create({
