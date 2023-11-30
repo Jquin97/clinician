@@ -2,40 +2,21 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Patients", {
+    await queryInterface.createTable("Scans", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      firstName: {
+      attachments: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      dob: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      gender: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      phone: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      bloodGroup: {
-        type: Sequelize.STRING,
-      },
-      UserId: {
-        type: Sequelize.UUID,
+      PatientId: {
+        type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: "Patients",
           key: "id",
           type: "Foreign Key",
         },
@@ -53,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Patients");
+    await queryInterface.dropTable("Scans");
   },
 };

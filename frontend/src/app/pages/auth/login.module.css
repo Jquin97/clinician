@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+  padding: 0rem 1rem;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form h1{
+  font-size: 2em;
+  font-weight:bold;
+}
+
+.form h2{
+  font-size: 1.5em;
+  font-weight:bold;
+}
+
+
+.formItems {
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+}
+.navigate {
+  color: #1677ff;
+}
+.navigate:hover {
+  cursor: pointer;
+}

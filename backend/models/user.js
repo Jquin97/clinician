@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Patient, {
-        onDelete: 'CASCADE', // If a user is deleted, delete associated patients
+        onDelete: "CASCADE", // If a user is deleted, delete associated patients
       });
     }
   }
@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         required: true,
-      },   
+      },
       lastName: {
         type: DataTypes.STRING,
         allowNull: false,

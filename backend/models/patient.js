@@ -2,27 +2,23 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Patient extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
       Patient.hasMany(models.TestResult, {
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
+      });
+      Patient.hasMany(models.Scans, {
+        onDelete: "CASCADE",
       });
       Patient.hasMany(models.Medication, {
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       });
       Patient.hasMany(models.Appointment, {
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       });
       Patient.hasOne(models.EmergencyContact, {
-        onDelete: 'CASCADE',
+        onDelete: "CASCADE",
       });
-      
-
     }
   }
   Patient.init(
@@ -30,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       firstName: {
         type: DataTypes.STRING,
         allowNull: false,
-        required: true,
+        required: [true, "First name is required"],
       },
       lastName: {
         type: DataTypes.STRING,
@@ -39,21 +35,29 @@ module.exports = (sequelize, DataTypes) => {
       },
       dob: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
         required: true,
       },
       gender: {
         type: DataTypes.STRING,
+        allowNull: true,
+        required: true,
+      },
+      email: {
+        type: DataTypes.STRING,
         allowNull: false,
         required: true,
+        isEmail: true,
+        len: [7, 50],
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         required: true,
       },
       bloodGroup: {
         type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {

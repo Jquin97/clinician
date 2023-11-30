@@ -10,8 +10,17 @@ module.exports = {
         id: uuidv4(),
         firstName: "John",
         lastName: "Doe",
-        email: `${uuidv4().slice(0, 4)}@gmail.com`,
-        password: await authHelper.encryptPassword("test123"),
+        email: "test@gmail.com",
+        password: await authHelper.encryptPassword("123456"),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: uuidv4(),
+        firstName: "John 2",
+        lastName: "Doe 2",
+        email: "testuser441133@gmail.com",
+        password: await authHelper.encryptPassword("12345678"),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -19,6 +28,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("User", null, {});
+    await queryInterface.bulkDelete("Users", null, {});
   },
 };

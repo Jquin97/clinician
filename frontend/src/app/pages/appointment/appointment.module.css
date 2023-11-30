@@ -1,0 +1,58 @@
+.title{
+    margin:0;
+    padding:0;
+    text-align: center;
+}
+.patientAva{
+    margin-left :7% ;
+    float:left;
+    display:block;
+}
+.patientDetail {
+
+  padding: 7px 30px;
+  width: 300px;
+  background-color: rgba(173, 216, 247, 0.345);
+  border:1px solid rgb(176, 197, 203);
+
+  border-radius: 5px;
+  
+  margin-left :16% ;
+  margin-top:10%;
+
+}
+
+.addBtn{
+    float:right;  
+    margin-bottom:3%;
+}
+
+.addApp {
+    /* max-width: 150%; */
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 105%; 
+  height: 105%; 
+  overflow: auto; 
+  background-color: rgba(0,0,0,0.4); 
+
+}
+
+.appointmentForm {
+    max-width: 100%;
+    font-family: 'Arial', sans-serif; 
+    background-color: #ffffff;
+    margin: 10% auto;
+    padding: 40px;
+    border: none;
+    width: 20%; 
+    border-radius: 8px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  .cancelBtn{
+    margin: 0 10%;
+  }

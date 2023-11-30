@@ -5,10 +5,9 @@ const morgan = require("morgan");
 const ratelimit = require("express-rate-limit");
 const helmet = require("helmet");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
-
 const app = express();
 const version = process.env.VERSION;
-const PORT = process.env.PORT || 5002;
+const PORT = process.env.PORT || 5000;
 
 const { sequelize } = require("./models");
 const routes = require("./routes/routes");
@@ -44,7 +43,7 @@ app.get("/", (_, res) => {
 app.use(`/api/${version}`, routes);
 
 // ERROR HANDLING FOR 404 ROUTE
-app.all("*", (req, res, next) => {
+app.all("*", (req, res) => {
   res.status(404).json({
     status: "fail",
     message: "Cannot found any route",
@@ -59,7 +58,7 @@ app.listen(PORT, async () => {
   try {
     console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
     await sequelize.authenticate();
-    console.log(`Connection has been established successfully. ${PORT}`);
+    console.log(`Connection has been established successfully.${PORT}`);
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }

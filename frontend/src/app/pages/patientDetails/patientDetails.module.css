@@ -1,0 +1,23 @@
+.detailsContainer{
+    margin: auto;
+}
+
+.rowMargins{
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
+
+.detailsHeader{
+    border: 1px solid black;
+    padding: 10px 10px 0px 10px;
+}
+.detailsContainer{
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
+}
+.editBtn{
+    margin-left: 30px;
+    margin-top: 50px;
+
+}

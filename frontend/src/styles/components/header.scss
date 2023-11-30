@@ -1,0 +1,29 @@
+// APP LOGO
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: inherit;
+  &-img {
+    width: 40px;
+    height: 40px;
+  }
+  &-title {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--c-secondary);
+  }
+}
+
+// APP HEADER
+.app_header {
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+// APP DASHOBOARD
+.app_dashboard {
+}

@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  direction: column;
+  height: 100vh;
+}
+
+.background {
+  width: 100%;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: rgba(31, 31, 31, 0.88);
+  height: 64;
+  padding-inline: 50;
+  line-height: 64px;
+  background-color: rgba(173, 216, 247, 0.5);
+  /* border-bottom: 1px solid rgba(121, 120, 120, 0.573); */
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  display: flex;
+  flex-direction: row;
+  float: right;
+}
+.name {
+  margin-top: 19px;
+}
+.button {
+  margin-left: 35px;
+  margin-right: 0px;
+  color: rgba(0, 0, 0, 0.482);
+  border: 1.5px solid rgba(0, 0, 0, 0.482);
+}

@@ -1,0 +1,47 @@
+name: "clinicanhealth"
+
+trigger:
+  - master
+  - develop
+  - azure-pipelines
+
+variables:
+  frontendDirectory: "frontend"
+  backendDirectory: "backend"
+  vmImageName: "ubuntu-latest"
+
+stages:
+  - stage: FrontendBuild
+    displayName: "Frontend"
+    jobs:
+      - job:
+        displayName: "Frontend"
+        pool:
+          vmImage: $(vmImageName)
+        steps:
+          # TODO: ADD JEST TEST REACT COVERAGE
+          - task: PublishBuildArtifacts@1
+            inputs:
+              pathtoPublish: "$(frontendDirectory)"
+              artifactName: "frontendartifact"
+            displayName: "Publish Frontend Artifacts"
+  - stage: BackendBuild
+    displayName: "Backend"
+    jobs:
+      - job:
+        displayName: "Upload Artifact"
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: "16.x"
+            displayName: "Install nodejs"
+          - task: ArchiveFiles@2
+            displayName: "Archive files"
+            inputs:
+              rootFolderOrFile: "$(backendDirectory)"
+              includeRootFolder: false
+              archiveType: zip
+              archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+              replaceExistingArchive: true
+          - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+            artifact: backendartifact

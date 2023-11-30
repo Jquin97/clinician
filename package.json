@@ -1,7 +1,7 @@
 {
   "name": "comp9034_devops",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mern application",
   "main": "index.js",
   "scripts": {
     "start:ui": "npm run start --prefix frontend",
@@ -9,9 +9,24 @@
     "install:ui": "npm install --prefix frontend",
     "install:api": "npm install --prefix backend",
     "start:api": "npm run server --prefix backend",
-    "stop:api": "npm run server:stop --prefix backend"
+    "stop:api": "npm run server:stop --prefix backend",
+    "app:test": "echo Tested",
+    "lint:ui": "npm run lint --prefix frontend",
+    "lint:api": "npm run lint --prefix backend",
+    "app:lint": "npm run lint:ui && npm run lint:api",
+    "app": "concurrently \"npm run start:ui\"  \"npm run start:api\"  ",
+    "prepare": "husky install"
   },
-  "keywords": [],
-  "author": "Suprim",
-  "license": "ISC"
+  "keywords": [
+    "Mern",
+    "Nodes",
+    "React"
+  ],
+  "author": "Comp9034_Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "husky": "^8.0.0",
+    "lint-staged": "^14.0.1"
+  }
 }

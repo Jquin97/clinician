@@ -5,24 +5,29 @@ const path = require("path");
 const Sequelize = require("sequelize");
 const process = require("process");
 const basename = path.basename(__filename);
-const env = "production";
-const config = require(__dirname + "/../config/config.json")[env];
+const env = process.env.NODE_ENV;
+const config = require(__dirname + "/../config/config.js")[env];
 const db = {};
 
 let sequelize;
 
-if (config.use_env_variable) {
-  sequelize = new Sequelize(
-    `postgres://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:5432/${process.env.DB_DATABASE}`
-  );
-} else {
-  sequelize = new Sequelize(
-    config.database,
-    config.username,
-    config.password,
-    config
-  );
-}
+sequelize = new Sequelize(
+  config.database,
+  config.username,
+  config.password,
+  config
+);
+
+// TODO: synchronize database
+// async function synchronizeDatabase() {
+//   try {
+//     await sequelize.sync({ force: true });
+//     console.log("All models were synchronized successfully.");
+//   } catch (error) {
+//     console.error("Error synchronizing models:", error);
+//   }
+// }
+// synchronizeDatabase();
 
 fs.readdirSync(__dirname)
   .filter((file) => {
