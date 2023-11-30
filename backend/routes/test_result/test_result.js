@@ -7,8 +7,9 @@ router
   .get(authorizeMiddleware, TestResultController.getPatientResults)
   .post(authorizeMiddleware, TestResultController.addPatientResults);
 router
-  .route("/:id")
-  .put(authorizeMiddleware, TestResultController.updatePatientResults)
+  .route("/entry/:id")
+  .get(authorizeMiddleware, TestResultController.getPatientResult)
+  .put(authorizeMiddleware, TestResultController.updatePatientResult)
   .delete(authorizeMiddleware, TestResultController.deletePatientResults);
 
 module.exports = router;

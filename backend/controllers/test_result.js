@@ -35,7 +35,41 @@ const getPatientResults = async (req, res) => {
   }
 };
 
-const updatePatientResults = async (req, res) => {
+const getPatientResult = async (req, res) => {
+  const id = req.params.id;
+  try {
+    if (!id) {
+      return res.send({
+        success: false,
+        message: "ID not found",
+      });
+    }
+    const result = await TestResult.findOne({
+      where: {
+        id,
+      },
+    });
+    if (result) {
+      res.send({
+        success: true,
+        data: result,
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "No test result found for the id",
+      });
+    }
+  } catch (error) {
+    res.send({
+      success: false,
+      error,
+      message: "Unable to find test results.",
+    });
+  }
+};
+
+const updatePatientResult = async (req, res) => {
   const id = req.params.id;
   try {
     if (!id) {
@@ -45,16 +79,11 @@ const updatePatientResults = async (req, res) => {
       });
     }
 
-    const updateTestResult = await TestResult.update(
-      {
-        ...req.body.data,
+    const updateTestResult = await TestResult.update(req.body, {
+      where: {
+        id,
       },
-      {
-        where: {
-          id,
-        },
-      }
-    );
+    });
 
     const updatePatientResult = await TestResult.findOne({
       where: {
@@ -64,7 +93,7 @@ const updatePatientResults = async (req, res) => {
     if (updatePatientResult) {
       res.send({
         success: true,
-        updateTestResult,
+        data: updateTestResult,
         message: "Patient Results updated successfully.",
       });
     } else {
@@ -151,7 +180,8 @@ const addPatientResults = async (req, res) => {
 
 module.exports = {
   getPatientResults,
+  getPatientResult,
   addPatientResults,
-  updatePatientResults,
+  updatePatientResult,
   deletePatientResults,
 };

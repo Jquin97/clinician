@@ -14,6 +14,8 @@ router
   );
 // .put(authorizeMiddleware, upload.single("file") ,ScansController.updateScans) Dont need to update the file as you can delete and new files
 
-router.route("/:id").delete(authorizeMiddleware, ScansController.deleteScans);
+router
+  .route("/entry/:id")
+  .delete(authorizeMiddleware, ScansController.deleteScans);
 
 module.exports = router;

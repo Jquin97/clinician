@@ -16,6 +16,9 @@ import PatientAction from '../pages/patientAction/patientAction';
 import Appointment from '../pages/appointment/appointment';
 import TestResult from '../pages/testResult/testResult';
 import ScanResult from '../pages/scanResult/scanResult';
+import TestResultEdit from '../pages/testResult/testResultEdit';
+import PatientMedication from '../pages/medication/PatientMedication';
+import PatientMedicationEdit from '../pages/medication/PatientMedicationEdit';
 
 const RouteConfig = () => {
   return (
@@ -48,6 +51,17 @@ const RouteConfig = () => {
                 element={<ProtectedRoute element={<PatientAction />} />}></Route>
               <Route exact path="/dashboard/appointment" element={<Appointment />} />
               <Route exact path="/dashboard/test-result/:id" element={<TestResult />} />
+              <Route
+                exact
+                path="/dashboard/test-result/:patientId/edit/:entryId"
+                element={<TestResultEdit />}
+              />
+              <Route exact path="/dashboard/medication/:id" element={<PatientMedication />} />
+              <Route
+                exact
+                path="/dashboard/medication/:patientId/edit/:entryId"
+                element={<PatientMedicationEdit />}
+              />
               <Route exact path="/dashboard/scan-result/:id" element={<ScanResult />} />
             </Routes>
           </Router>

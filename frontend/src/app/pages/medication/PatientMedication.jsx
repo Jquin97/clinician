@@ -13,7 +13,7 @@ import {
   Input,
   Drawer,
 } from 'antd';
-import styles from './testResult.module.css';
+import styles from '../testResult/testResult.module.css';
 import { Link, useParams } from 'react-router-dom';
 import {
   addTestResults,
@@ -22,7 +22,7 @@ import {
   getTestResults,
 } from '../../../core/api/query';
 
-const TestResult = () => {
+const PatientMedication = () => {
   const { id } = useParams();
   const { Text, Title } = Typography;
   const { TextArea } = Input;
@@ -137,7 +137,7 @@ const TestResult = () => {
   return (
     <DashboardLayout showSider={true}>
       <div className="App">
-        <Title className={styles.title}>Test Results</Title>
+        <Title className={styles.title}>Medication</Title>
         <div className={styles.patientInfo}>
           <div className={styles.patientAva}>
             <Space align="center" direction="vertical" wrap size={16}>
@@ -153,7 +153,7 @@ const TestResult = () => {
             <Text>Phone: {patientsData.phone}</Text>
           </div>
           <Button type="primary" className={styles.addBtn} primary onClick={() => showDrawer()}>
-            <PlusOutlined /> Add Test Result
+            <PlusOutlined /> Add Medication
           </Button>
         </div>
       </div>
@@ -206,4 +206,4 @@ const TestResult = () => {
     </DashboardLayout>
   );
 };
-export default TestResult;
+export default PatientMedication;

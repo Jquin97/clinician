@@ -132,9 +132,14 @@ const addPatientScans = async (req, res) => {
     scans.forEach(async (el) => {
       const scanPath = path.join(__dirname, "../" + el.path);
       try {
-        await Scans.create({
+        const createdata = await Scans.create({
           attachments: scanPath,
           PatientId: patientID,
+        });
+        return res.send({
+          success: true,
+          data: createdata,
+          message: "Scans added successfully",
         });
       } catch (error) {
         return res.send({
@@ -142,10 +147,6 @@ const addPatientScans = async (req, res) => {
           message: "Exception, unable to add scans",
         });
       }
-    });
-    res.send({
-      success: true,
-      message: "Scans added successfully",
     });
   } catch (error) {
     return res.send({

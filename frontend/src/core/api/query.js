@@ -49,9 +49,16 @@ const deleteScanResults = (id) => {
 const getTestResults = (patientId) => {
   return protectedapiClient.get(`/test/${patientId}`);
 };
+const getSingleTestResult = (id) => {
+  return protectedapiClient.get(`/test/entry/${id}`);
+};
+const updateSingleTestResult = (id, data) => {
+  return protectedapiClient.put(`/test/entry/${id}`, data);
+};
 const addTestResults = (patientId, data) => {
   return protectedapiClient.post(`/test/${patientId}`, data);
 };
+
 const deleteTestResults = (id) => {
   return protectedapiClient.delete(`/test/${id}`);
 };
@@ -67,7 +74,9 @@ export {
   deleteScanResults,
   getPatientsByName,
   getTestResults,
+  getSingleTestResult,
   addTestResults,
+  updateSingleTestResult,
   deleteTestResults,
 };
 

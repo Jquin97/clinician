@@ -24,7 +24,39 @@ const getPatientMedications = async (req, res) => {
     data: medications,
   });
 };
-
+const getPatientMedication = async (req, res) => {
+  const id = req.params.id;
+  try {
+    if (!id) {
+      return res.send({
+        success: false,
+        message: "ID not found",
+      });
+    }
+    const result = await Medication.findOne({
+      where: {
+        id,
+      },
+    });
+    if (result) {
+      res.send({
+        success: true,
+        data: result,
+      });
+    } else {
+      res.send({
+        success: false,
+        message: "No test result found for the id",
+      });
+    }
+  } catch (error) {
+    res.send({
+      success: false,
+      error,
+      message: "Unable to find test results.",
+    });
+  }
+};
 const updatePatientMedication = async (req, res) => {
   const id = req.params.id;
   try {
@@ -35,16 +67,11 @@ const updatePatientMedication = async (req, res) => {
       });
     }
 
-    const updateMedication = await Medication.update(
-      {
-        ...req.body.data,
+    const updateMedication = await Medication.update(req.body, {
+      where: {
+        id,
       },
-      {
-        where: {
-          id,
-        },
-      }
-    );
+    });
 
     const updatePatientMedication = await Medication.findOne({
       where: {
@@ -54,7 +81,7 @@ const updatePatientMedication = async (req, res) => {
     if (updatePatientMedication) {
       res.send({
         success: true,
-        updateMedication,
+        data: updateMedication,
         message: "Patient Results updated successfully.",
       });
     } else {
@@ -71,7 +98,6 @@ const updatePatientMedication = async (req, res) => {
     });
   }
 };
-
 const deletePatientMedication = async (req, res) => {
   const id = req.params.id;
   try {
@@ -106,7 +132,6 @@ const deletePatientMedication = async (req, res) => {
     });
   }
 };
-
 const addPatientMedication = async (req, res) => {
   try {
     const patientID = req.params.patientID;
@@ -116,16 +141,15 @@ const addPatientMedication = async (req, res) => {
         message: "Patient ID not found",
       });
     }
-
-    const { type, note } = req.body.data;
-    if (!type || !note) {
+    const { treatment } = req.body;
+    if (!treatment) {
       return res.send({
         success: false,
         message: "Missing required fields",
       });
     }
-    req.body.data.PatientId = patientID;
-    const addMedication = await Medication.create(req.body.data);
+    req.body.PatientId = patientID;
+    const addMedication = await Medication.create(req.body);
     res.send({
       success: true,
       data: addMedication,
@@ -142,6 +166,7 @@ const addPatientMedication = async (req, res) => {
 
 module.exports = {
   getPatientMedications,
+  getPatientMedication,
   updatePatientMedication,
   deletePatientMedication,
   addPatientMedication,

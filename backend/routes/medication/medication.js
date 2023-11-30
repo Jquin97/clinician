@@ -4,11 +4,12 @@ const MedicationController = require("../../controllers/medication");
 const { authorizeMiddleware } = require("../../middlewares/auth_middleware");
 router
   .route("/:patientID")
-  .get(authorizeMiddleware, MedicationController.getPatientResults)
-  .post(authorizeMiddleware, MedicationController.addPatientResults);
+  .get(authorizeMiddleware, MedicationController.getPatientMedications)
+  .post(authorizeMiddleware, MedicationController.addPatientMedication);
 router
-  .route("/:id")
-  .put(authorizeMiddleware, MedicationController.updatePatientResults)
-  .delete(authorizeMiddleware, MedicationController.deletePatientResults);
+  .route("/entry/:id")
+  .get(authorizeMiddleware, MedicationController.getPatientMedication)
+  .put(authorizeMiddleware, MedicationController.updatePatientMedication)
+  .delete(authorizeMiddleware, MedicationController.deletePatientMedication);
 
 module.exports = router;
