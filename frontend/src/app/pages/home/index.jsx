@@ -20,15 +20,17 @@ const Home = () => {
         }
         response.data?.patients.map((el, key) => {
           el.value = (
-            <Link to={`/dashboard/patients/${el.id}`}>{el.firstName + ' ' + el.lastName}</Link>
+            <Link to={`/dashboard/patients/${el.id}`}>
+              <div>
+                {el.firstName + ' ' + el.lastName}
+              </div>
+            </Link>
           );
           el.key = key;
         });
-        console.log(response.data.patients);
         setOptions(response.data.patients);
       });
     }
-    console.log(options);
   };
 
   return (
