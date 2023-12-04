@@ -1,6 +1,7 @@
+/* eslint-disable no-debugger */
 import { UserOutlined, PlusOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import DashboardLayout from '../../layouts/DashboardLayout';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Avatar,
   Space,
@@ -11,25 +12,18 @@ import {
   Form,
   TimePicker,
   Modal,
+  Drawer,
 } from 'antd';
 import styles from './appointment.module.css';
-
-
+import { useParams } from 'react-router-dom';
+import { getPatientByID } from '../../../core/api/query';
 const Appointment = () => {
   const { Text, Title } = Typography;
-
+  const { id } = useParams();
   const [form] = Form.useForm();
   const { confirm } = Modal;
-
-  const patientsData = {
-    patientID: 1,
-    firstName: 'Gojo',
-    lastName: 'Satoru',
-    DOB: '10-03-2017',
-    gender: 'Male',
-    phone: ' 0422781719',
-  };
-
+  const [patientsData, setPatientDetails] = useState({});
+  const [open, setOpen] = useState(false);
   const [dataSource, setDataSource] = useState([
     {
       key: 1,
@@ -86,16 +80,15 @@ const Appointment = () => {
   };
 
   const [state, setState] = useState(true);
-  const useEffect = () => {
-    const addAp = document.querySelector(`.${styles.addApp}`);
-    if (state) {
-      addAp.style.display = 'block';
-      setState(false);
-    } else {
-      addAp.style.display = 'none';
-      setState(true);
-    }
-  };
+  useEffect(() => {
+    getPatientByID(id).then((res) => {
+      if (res.data.success === true) {
+        setPatientDetails(res.data.data);
+      } else {
+        openNotification('Error', 'Could not find patient.');
+      }
+    });
+  }, [id]);
   const [appId, setAppId] = useState(3); // get the biggest AppointmentID +1
 
   const onFinish = async (values) => {
@@ -111,11 +104,17 @@ const Appointment = () => {
     };
     setDataSource([...dataSource, newData]);
     setAppId(appId + 1);
-    useEffect();
   };
 
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
-    <DashboardLayout>
+    <DashboardLayout showSider={true} patientId={id} menu={'appointment'}>
       <div className="App">
         <Title className={styles.title}>Appointment</Title>
         <div className={styles.patientInfo}>
@@ -132,7 +131,7 @@ const Appointment = () => {
             <Text>Gender: {patientsData.gender}</Text> <br></br>
             <Text>Phone: {patientsData.phone}</Text>
           </div>
-          <Button type="primary" className={styles.addBtn} primary onClick={() => useEffect()}>
+          <Button type="primary" className={styles.addBtn} primary onClick={showDrawer}>
             <PlusOutlined /> Add Appointment
           </Button>
         </div>
@@ -144,31 +143,39 @@ const Appointment = () => {
       </div>
 
       {/* Add Appointment */}
-      <div className={styles.addApp}>
-        <Form form={form} className={styles.appointmentForm} onFinish={onFinish}>
-        <Title level={3} >Add Appointment</Title> <br></br>
-          <Form.Item
-            label="Date"
-            name="date"
-            rules={[{ required: true, message: 'Date is required' }]}>
-            <DatePicker />
-          </Form.Item>
-
-          <Form.Item
-            label="Time"
-            name="time"
-            rules={[{ required: true, message: 'Time is required' }]}>
-            <TimePicker format="HH:mm" />
-          </Form.Item>
-
-          <Form.Item>
-            <Button className= {styles.cancelBtn} onClick={() => useEffect()}>Cancel</Button>
-            <Button type="primary" htmlType="submit">
-              Update
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+      <Drawer
+      title="Add new test results"
+      width={720}
+      onClose={onClose}
+      open={open}
+      styles={{
+        body: {
+          paddingBottom: 80,
+        },
+      }}
+      extra={
+        <Space>
+          <Button onClick={onClose}>Cancel</Button>
+          <Button htmlType="submit" onClick={() => form.submit()} type="primary">
+            Submit
+          </Button>
+        </Space>
+      }>
+          <Form form={form} layout="vertical" onFinish={onFinish}>
+            <Form.Item
+              label="Date"
+              name="date"
+              rules={[{ required: true, message: 'Date is required' }]}>
+              <DatePicker />
+            </Form.Item>
+            <Form.Item
+              label="Time"
+              name="time"
+              rules={[{ required: true, message: 'Time is required' }]}>
+              <TimePicker format="HH:mm" />
+            </Form.Item>
+          </Form>
+      </Drawer>
     </DashboardLayout>
   );
 };

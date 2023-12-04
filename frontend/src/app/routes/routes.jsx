@@ -49,7 +49,7 @@ const RouteConfig = () => {
                 exact
                 path="/dashboard/patients/:id/edit"
                 element={<ProtectedRoute element={<PatientAction />} />}></Route>
-              <Route exact path="/dashboard/appointment" element={<Appointment />} />
+              <Route exact path="/dashboard/appointment/:id" element={<Appointment />} />
               <Route exact path="/dashboard/test-result/:id" element={<TestResult />} />
               <Route
                 exact

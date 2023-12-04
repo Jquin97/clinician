@@ -29,14 +29,6 @@ import {
 } from '../../../core/api/query';
 import openNotification from '../../components/notifications';
 import { API_BASE_URL } from '../../../core/config/apiConfig';
-const props = {
-  action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-  onChange({ file, fileList }) {
-    if (file.status !== 'uploading') {
-      console.log(file, fileList);
-    }
-  },
-};
 
 const TestResult = () => {
   const { id } = useParams();
@@ -126,21 +118,29 @@ const TestResult = () => {
   };
 
   const onFinish = async (values) => {
-    const newData = {
-      key: appId,
-      date: `${values.date}`,
-      attachments: `${values.attachments.name}`,
-      note: `${values.note}`,
-    };
-
     const payloadData = new FormData();
     payloadData.append('files', values.attachments);
-    addScanResults(id, payloadData).then((res) => {
-      console.log(res.data);
-    });
+    addScanResults(id, payloadData)
+      .then((res) => res.json())
+      .then((resadd) => {
+        if (resadd.success === true) {
+          setData([
+            ...data,
+            {
+              id: resadd.data.id,
+              note: resadd.data.note,
+              date: resadd.data.createdAt,
+              attachments: resadd.data.attachments,
+            },
+          ]);
+          setAppId(appId + 1);
+          form.resetFields();
+          openNotification('Details Added', 'successfully.');
+        } else {
+          openNotification('Error', 'Something went wrong try again later');
+        }
+      });
 
-    setData([...data, newData]);
-    setAppId(appId + 1);
     // Close Model
     setOpen(false);
   };
@@ -174,7 +174,7 @@ const TestResult = () => {
     });
   }, [id]);
   return (
-    <DashboardLayout showSider={true}>
+    <DashboardLayout showSider={true} patientId={id} menu={"scan"}>
       <div className="App">
         <Title className={styles.title}>Scan Results </Title>
         <div className={styles.patientInfo}>
@@ -235,14 +235,13 @@ const TestResult = () => {
             }}
             rules={[{ required: true, message: 'Result is required' }]}>
             <Upload
-              {...props}
               listType="picture"
               beforeUpload={(file) => {
-                console.log(file);
+                if (!['image/jpeg', 'image/png'].includes(file.type)) {
+                  message.error(`${file.name} is not a valid image type`, 2);
+                  return null;
+                }
                 return false;
-              }}
-              customRequest={(info) => {
-                setFileList([info.files]);
               }}>
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>

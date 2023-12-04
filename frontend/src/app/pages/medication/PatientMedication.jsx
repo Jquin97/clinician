@@ -1,25 +1,14 @@
 import { UserOutlined, PlusOutlined, ExclamationCircleFilled } from '@ant-design/icons';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import React, { useEffect, useState } from 'react';
-import {
-  Avatar,
-  Space,
-  Typography,
-  Table,
-  Button,
-  DatePicker,
-  Form,
-  Modal,
-  Input,
-  Drawer,
-} from 'antd';
+import { Avatar, Space, Typography, Table, Button, Form, Modal, Input, Drawer } from 'antd';
 import styles from '../testResult/testResult.module.css';
 import { Link, useParams } from 'react-router-dom';
 import {
-  addTestResults,
-  deleteTestResults,
+  addMedications,
+  deleteMedications,
+  getMedications,
   getPatientByID,
-  getTestResults,
 } from '../../../core/api/query';
 
 const PatientMedication = () => {
@@ -28,7 +17,6 @@ const PatientMedication = () => {
   const { TextArea } = Input;
   const [form] = Form.useForm();
   const { confirm } = Modal;
-  const [appId, setAppId] = useState(3);
   const [data, setData] = useState([]);
   const [patientsData, setPatientDetails] = useState({});
   const [open, setOpen] = useState(false);
@@ -40,21 +28,21 @@ const PatientMedication = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Result',
-      dataIndex: 'result',
-      key: 'result',
+      title: 'Prescription',
+      dataIndex: 'prescription',
+      key: 'prescription',
     },
     {
-      title: 'Note',
-      dataIndex: 'note',
-      key: 'note',
+      title: 'Treatment',
+      dataIndex: 'treatment',
+      key: 'treatment',
     },
     {
       title: 'Action',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <Link to={`/dashboard/test-result/${id}/edit/${record.id}`}>Edit</Link>
+          <Link to={`/dashboard/medication/${id}/edit/${record.id}`}>Edit</Link>
           <Button danger onClick={() => handleDelete(record.id)}>
             Delete
           </Button>
@@ -77,7 +65,7 @@ const PatientMedication = () => {
       okType: 'danger',
       cancelText: 'No',
       async onOk() {
-        const deletres = await deleteTestResults(key);
+        const deletres = await deleteMedications(key);
         if (deletres.data.success === true) {
           const newData = data.filter((item) => item.id !== key);
           setData(newData);
@@ -90,34 +78,39 @@ const PatientMedication = () => {
   };
 
   const onFinish = async (values) => {
-    values['date'] = values.date.format('DD-MM-YYYY');
     const newData = {
-      type: `${values.date}`,
-      resultFile: `${values.result}`,
-      note: `${values.note}`,
+      treatment: `${values.treatment}`,
+      prescription: `${values.prescription}`,
     };
-    addTestResults(id, newData).then((res) => {
+    addMedications(id, newData).then((res) => {
       if (res.data.success === true) {
         setOpen(false);
         form.resetFields();
-        setData([...data, newData]);
-        setAppId(appId + 1);
+        setData([
+          ...data,
+          {
+            id: `${res.data.data.id}`,
+            data: `${res.data.data.createdAt}`,
+            treatment: `${res.data.data.treatment}`,
+            prescription: `${res.data.data.prescription}`,
+          },
+        ]);
       }
     });
   };
   // Get Patient And Test Results
   useEffect(() => {
-    getTestResults(id).then((res) => {
+    getMedications(id).then((res) => {
       if (res?.data) {
-        if (res.data.results && res.data.results.length > 0) {
+        if (res.data.data && res.data.data.length > 0) {
           setData(
-            res.data.results.map((item) => {
+            res.data.data.map((item) => {
               return {
                 id: item.id,
                 patiendId: item.PatientId,
+                treatment: item.treatment,
+                prescription: item.prescription,
                 date: item.createdAt,
-                result: item.resultFile,
-                note: item.note,
               };
             })
           );
@@ -187,18 +180,12 @@ const PatientMedication = () => {
         }>
         <Form form={form} onFinish={onFinish} layout="vertical">
           <Form.Item
-            label="Date"
-            name="date"
-            rules={[{ required: true, message: 'Date is required' }]}>
-            <DatePicker />
+            label="Treatment"
+            name="treatment"
+            rules={[{ required: true, message: 'Treatment is required' }]}>
+            <Input />
           </Form.Item>
-          <Form.Item
-            label="Result"
-            name="result"
-            rules={[{ required: true, message: 'Result is required' }]}>
-            <Input placeholder="Basic usage" />
-          </Form.Item>
-          <Form.Item label="Note" name="note">
+          <Form.Item label="Prescription" name="prescription">
             <TextArea rows={4} />
           </Form.Item>
         </Form>

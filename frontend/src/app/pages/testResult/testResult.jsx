@@ -21,6 +21,7 @@ import {
   getPatientByID,
   getTestResults,
 } from '../../../core/api/query';
+import openNotification from '../../components/notifications';
 
 const TestResult = () => {
   const { id } = useParams();
@@ -99,9 +100,20 @@ const TestResult = () => {
     addTestResults(id, newData).then((res) => {
       if (res.data.success === true) {
         setOpen(false);
-        form.resetFields();
-        setData([...data, newData]);
+        setData([
+          ...data,
+          {
+            id: res.data.data.id,
+            date: res.data.data.createdAt,
+            result: res.data.data.resultFile,
+            note: res.data.data.note,
+          },
+        ]);
         setAppId(appId + 1);
+        form.resetFields();
+        openNotification('Details Added', 'successfully.');
+      } else {
+        openNotification('Error', 'Something went wrong try again later');
       }
     });
   };
@@ -135,7 +147,7 @@ const TestResult = () => {
     });
   }, [id]);
   return (
-    <DashboardLayout showSider={true}>
+    <DashboardLayout showSider={true} patientId={id} menu={"test"}>
       <div className="App">
         <Title className={styles.title}>Test Results</Title>
         <div className={styles.patientInfo}>
@@ -158,15 +170,11 @@ const TestResult = () => {
         </div>
       </div>
 
-      {/* Result detail */}
       <div className="appDetail">
         <Table columns={columns} dataSource={data} />
       </div>
 
-      {/* Add result */}
       <div className={styles.addApp}></div>
-
-      {/* Add result */}
       <Drawer
         title="Add new test results"
         width={720}

@@ -6,8 +6,8 @@ import styles from '../testResult/testResult.module.css';
 import { useParams } from 'react-router-dom';
 import {
   getPatientByID,
-  getSingleTestResult,
-  updateSingleTestResult,
+  getSingleMedication,
+  updateSingleMedication,
 } from '../../../core/api/query';
 import openNotification from '../../components/notifications';
 
@@ -22,13 +22,11 @@ const PatientMedicationEdit = () => {
 
   // Update result
   const onFinish = async (values) => {
-    values['date'] = values.date.format('DD-MM-YYYY');
     const newData = {
-      type: `${values.date}`,
-      resultFile: `${values.result}`,
-      note: `${values.note}`,
+      treatment: `${values.treatment}`,
+      prescription: `${values.prescription}`,
     };
-    updateSingleTestResult(entryId, newData).then((res) => {
+    updateSingleMedication(entryId, newData).then((res) => {
       if (res.data.success == true) {
         openNotification('Details Updated', 'Patient Details updated successfully.');
       } else {
@@ -42,7 +40,7 @@ const PatientMedicationEdit = () => {
       if (res.data.success === true) {
         setPatientDetails(res.data.data);
         setPatientTestDataloading(true);
-        getSingleTestResult(entryId).then((res) => {
+        getSingleMedication(entryId).then((res) => {
           setPatientTestData(res.data.data);
           setPatientTestDataloading(false);
         });
@@ -55,7 +53,7 @@ const PatientMedicationEdit = () => {
   return (
     <DashboardLayout showSider={true}>
       <main className="App">
-        <Title className={styles.title}>Test Results</Title>
+        <Title className={styles.title}>Patient Medication Edit</Title>
         <div className={styles.patientInfo}>
           <div className={styles.patientAva}>
             <Space align="center" direction="vertical" wrap size={16}>
@@ -77,13 +75,16 @@ const PatientMedicationEdit = () => {
       ) : (
         <Form form={form} onFinish={onFinish} layout="vertical">
           <Form.Item
-            label="Result"
-            name="result"
-            initialValue={patienttestData.resultFile}
-            rules={[{ required: true, message: 'Result is required' }]}>
-            <Input placeholder="Basic usage" />
+            label="Treatment"
+            name="treatment"
+            initialValue={patienttestData.treatment}
+            rules={[{ required: true, message: 'Treatment is required' }]}>
+            <Input />
           </Form.Item>
-          <Form.Item label="Note" name="note" initialValue={patienttestData.note}>
+          <Form.Item
+            label="Prescription"
+            name="prescription"
+            initialValue={patienttestData.prescription}>
             <TextArea rows={4} />
           </Form.Item>
           <Form.Item wrapperCol={{ span: 12, offset: 7 }}>

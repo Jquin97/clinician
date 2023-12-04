@@ -16,11 +16,8 @@ import {
 import styles from './testResult.module.css';
 import { useParams } from 'react-router-dom';
 import {
-  addTestResults,
-  deleteTestResults,
   getPatientByID,
   getSingleTestResult,
-  getTestResults,
   updateSingleTestResult,
 } from '../../../core/api/query';
 import openNotification from '../../components/notifications';
@@ -36,9 +33,7 @@ const TestResultEdit = () => {
 
   // Update result
   const onFinish = async (values) => {
-    values['date'] = values.date.format('DD-MM-YYYY');
     const newData = {
-      type: `${values.date}`,
       resultFile: `${values.result}`,
       note: `${values.note}`,
     };
@@ -69,7 +64,7 @@ const TestResultEdit = () => {
   return (
     <DashboardLayout showSider={true}>
       <main className="App">
-        <Title className={styles.title}>Test Results</Title>
+        <Title className={styles.title}>Test Results Edit</Title>
         <div className={styles.patientInfo}>
           <div className={styles.patientAva}>
             <Space align="center" direction="vertical" wrap size={16}>

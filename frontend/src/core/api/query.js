@@ -42,7 +42,7 @@ const addScanResults = (patientId, formData) => {
   });
 };
 const deleteScanResults = (id) => {
-  return protectedapiClient.delete(`/scans/${id}`);
+  return protectedapiClient.delete(`/scans/entry/${id}`);
 };
 
 // Test Results
@@ -58,9 +58,25 @@ const updateSingleTestResult = (id, data) => {
 const addTestResults = (patientId, data) => {
   return protectedapiClient.post(`/test/${patientId}`, data);
 };
-
 const deleteTestResults = (id) => {
-  return protectedapiClient.delete(`/test/${id}`);
+  return protectedapiClient.delete(`/test/entry/${id}`);
+};
+
+// Medication
+const getMedications = (patientId) => {
+  return protectedapiClient.get(`/medication/${patientId}`);
+};
+const getSingleMedication = (id) => {
+  return protectedapiClient.get(`/medication/entry/${id}`);
+};
+const updateSingleMedication = (id, data) => {
+  return protectedapiClient.put(`/medication/entry/${id}`, data);
+};
+const addMedications = (patientId, data) => {
+  return protectedapiClient.post(`/medication/${patientId}`, data);
+};
+const deleteMedications = (id) => {
+  return protectedapiClient.delete(`/medication/entry/${id}`);
 };
 
 export {
@@ -78,6 +94,11 @@ export {
   addTestResults,
   updateSingleTestResult,
   deleteTestResults,
+  getMedications,
+  getSingleMedication,
+  updateSingleMedication,
+  addMedications,
+  deleteMedications,
 };
 
 export default QueryProvider;
