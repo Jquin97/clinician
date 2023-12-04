@@ -46,23 +46,33 @@ const DashboardLayout = ({
 
   const items = [
     {
-      label: <Link to={`/dashboard/patients/${params.id}`}>Patient details</Link>,
+      label: (
+        <Link to={`/dashboard/patients/${params.id ? params.id : patientId}`}>Patient details</Link>
+      ),
       key: 'detail',
     },
     {
-      label: <Link to={`/dashboard/appointment/${params.id}`}>Appointment</Link>,
+      label: (
+        <Link to={`/dashboard/appointment/${params.id ? params.id : patientId}`}>Appointment</Link>
+      ),
       key: 'appointment',
     },
     {
-      label: <Link to={`/dashboard/medication/${params.id}`}>Medication</Link>,
+      label: (
+        <Link to={`/dashboard/medication/${params.id ? params.id : patientId}`}>Medication</Link>
+      ),
       key: 'medication',
     },
     {
-      label: <Link to={`/dashboard/test-result/${params.id}`}>Test Result</Link>,
+      label: (
+        <Link to={`/dashboard/test-result/${params.id ? params.id : patientId}`}>Test Result</Link>
+      ),
       key: 'test',
     },
     {
-      label: <Link to={`/dashboard/scan-result/${params.id}`}>Scan Result</Link>,
+      label: (
+        <Link to={`/dashboard/scan-result/${params.id ? params.id : patientId}`}>Scan Result</Link>
+      ),
       key: 'scan',
     },
   ];

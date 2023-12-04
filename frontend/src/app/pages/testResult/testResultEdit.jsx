@@ -1,18 +1,7 @@
-import { UserOutlined, PlusOutlined, ExclamationCircleFilled } from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import DashboardLayout from '../../layouts/DashboardLayout';
 import React, { useEffect, useState } from 'react';
-import {
-  Avatar,
-  Space,
-  Typography,
-  Table,
-  Button,
-  DatePicker,
-  Form,
-  Modal,
-  Input,
-  Drawer,
-} from 'antd';
+import { Avatar, Space, Typography, Button, Form, Input } from 'antd';
 import styles from './testResult.module.css';
 import { useParams } from 'react-router-dom';
 import {
@@ -62,7 +51,7 @@ const TestResultEdit = () => {
   }, [id]);
 
   return (
-    <DashboardLayout showSider={true}>
+    <DashboardLayout showSider={true} patientId={id}>
       <main className="App">
         <Title className={styles.title}>Test Results Edit</Title>
         <div className={styles.patientInfo}>

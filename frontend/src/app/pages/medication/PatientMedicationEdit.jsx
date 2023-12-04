@@ -51,7 +51,7 @@ const PatientMedicationEdit = () => {
   }, [id]);
 
   return (
-    <DashboardLayout showSider={true}>
+    <DashboardLayout showSider={true} patientId={id}>
       <main className="App">
         <Title className={styles.title}>Patient Medication Edit</Title>
         <div className={styles.patientInfo}>

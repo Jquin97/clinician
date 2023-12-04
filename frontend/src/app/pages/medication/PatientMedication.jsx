@@ -128,7 +128,7 @@ const PatientMedication = () => {
     });
   }, [id]);
   return (
-    <DashboardLayout showSider={true}>
+    <DashboardLayout showSider={true} patientId={id}>
       <div className="App">
         <Title className={styles.title}>Medication</Title>
         <div className={styles.patientInfo}>
