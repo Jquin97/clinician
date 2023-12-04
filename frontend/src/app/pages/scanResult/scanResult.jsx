@@ -174,7 +174,7 @@ const TestResult = () => {
     });
   }, [id]);
   return (
-    <DashboardLayout showSider={true} patientId={id} menu={"scan"}>
+    <DashboardLayout showSider={true} patientId={id} menu={'scan'}>
       <div className="App">
         <Title className={styles.title}>Scan Results </Title>
         <div className={styles.patientInfo}>

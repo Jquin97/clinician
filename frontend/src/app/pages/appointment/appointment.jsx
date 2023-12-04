@@ -144,37 +144,37 @@ const Appointment = () => {
 
       {/* Add Appointment */}
       <Drawer
-      title="Add new test results"
-      width={720}
-      onClose={onClose}
-      open={open}
-      styles={{
-        body: {
-          paddingBottom: 80,
-        },
-      }}
-      extra={
-        <Space>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button htmlType="submit" onClick={() => form.submit()} type="primary">
-            Submit
-          </Button>
-        </Space>
-      }>
-          <Form form={form} layout="vertical" onFinish={onFinish}>
-            <Form.Item
-              label="Date"
-              name="date"
-              rules={[{ required: true, message: 'Date is required' }]}>
-              <DatePicker />
-            </Form.Item>
-            <Form.Item
-              label="Time"
-              name="time"
-              rules={[{ required: true, message: 'Time is required' }]}>
-              <TimePicker format="HH:mm" />
-            </Form.Item>
-          </Form>
+        title="Add new test results"
+        width={720}
+        onClose={onClose}
+        open={open}
+        styles={{
+          body: {
+            paddingBottom: 80,
+          },
+        }}
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button htmlType="submit" onClick={() => form.submit()} type="primary">
+              Submit
+            </Button>
+          </Space>
+        }>
+        <Form form={form} layout="vertical" onFinish={onFinish}>
+          <Form.Item
+            label="Date"
+            name="date"
+            rules={[{ required: true, message: 'Date is required' }]}>
+            <DatePicker />
+          </Form.Item>
+          <Form.Item
+            label="Time"
+            name="time"
+            rules={[{ required: true, message: 'Time is required' }]}>
+            <TimePicker format="HH:mm" />
+          </Form.Item>
+        </Form>
       </Drawer>
     </DashboardLayout>
   );

@@ -147,7 +147,7 @@ const TestResult = () => {
     });
   }, [id]);
   return (
-    <DashboardLayout showSider={true} patientId={id} menu={"test"}>
+    <DashboardLayout showSider={true} patientId={id} menu={'test'}>
       <div className="App">
         <Title className={styles.title}>Test Results</Title>
         <div className={styles.patientInfo}>
