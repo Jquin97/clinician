@@ -9,6 +9,7 @@ const { Title } = Typography;
 const { Header } = Layout;
 
 const HeaderComponent = () => {
+  const user = JSON.parse(localStorage.getItem('userData'));
   return (
     <header className="app_header">
       <Space className={styles.background} direction="vertical" size={[0, 48]}>
@@ -24,7 +25,7 @@ const HeaderComponent = () => {
             </div>
             <div className={styles.right}>
               <Title className={styles.name} level={5}>
-                Doctor Name
+                {user.firstName + ' '+ user.lastName}
               </Title>
               <Space>
                 <Button href="/login" className={styles.button} type="text" ghost>

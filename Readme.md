@@ -1,5 +1,5 @@
-# -clinician-app
-Azure Devops
+# Devops-clinician-app
+
 To setup the backend, follow these steps:
 
 1. Make sure you have installed Nodejs and PostgreSQL.

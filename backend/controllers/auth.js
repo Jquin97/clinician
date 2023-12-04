@@ -39,6 +39,8 @@ const login = async (req, res) => {
         const data = {
           token,
           email,
+          firstName: existingUser[0].firstName,
+          lastName: existingUser[0].lastName,
           id: existingUser[0].id,
         };
         res.send({
