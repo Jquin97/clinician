@@ -22,7 +22,11 @@ import {
   getTestResults,
 } from '../../../core/api/query';
 import openNotification from '../../components/notifications';
+const moment = require('moment');
 
+function formatDate(date) {
+  return moment(date).format('DD-MM-YYYY');
+}
 const TestResult = () => {
   const { id } = useParams();
   const { Text, Title } = Typography;
@@ -160,7 +164,7 @@ const TestResult = () => {
             <Title level={3}>
               {patientsData.firstName} {patientsData.lastName}
             </Title>
-            <Text>DOB: {patientsData.DOB}</Text> <br></br>
+            <Text>DOB: {formatDate(patientsData.dob)}</Text> <br></br>
             <Text>Gender: {patientsData.gender}</Text> <br></br>
             <Text>Phone: {patientsData.phone}</Text>
           </div>

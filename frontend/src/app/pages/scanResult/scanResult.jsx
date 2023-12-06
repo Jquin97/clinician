@@ -29,7 +29,11 @@ import {
 } from '../../../core/api/query';
 import openNotification from '../../components/notifications';
 import { API_BASE_URL } from '../../../core/config/apiConfig';
+const moment = require('moment');
 
+function formatDate(date) {
+  return moment(date).format('DD-MM-YYYY');
+}
 const TestResult = () => {
   const { id } = useParams();
   const { Text, Title } = Typography;
@@ -187,7 +191,7 @@ const TestResult = () => {
             <Title level={3}>
               {patientDetails.firstName} {patientDetails.lastName}
             </Title>
-            <Text>DOB: {patientDetails.DOB}</Text> <br></br>
+            <Text>DOB: {formatDate(patientDetails.dob)}</Text> <br></br>
             <Text>Gender: {patientDetails.gender}</Text> <br></br>
             <Text>Phone: {patientDetails.phone}</Text>
           </div>
