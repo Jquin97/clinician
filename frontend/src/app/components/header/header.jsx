@@ -5,11 +5,22 @@ import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { APP_NAME } from '../../../utils/constants';
 const { Title } = Typography;
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../core/contextApi/authContext';
 
 const { Header } = Layout;
 
 const HeaderComponent = () => {
+  const navigate = useNavigate();
+  const { loginUser } = useAuth();
+
   const user = JSON.parse(localStorage.getItem('userData'));
+
+  const handleLogout = ()=>{
+    loginUser(null);
+    localStorage.setItem('userData',null);
+    navigate('/login');
+  }
   return (
     <header className="app_header">
       <Space className={styles.background} direction="vertical" size={[0, 48]}>
@@ -28,7 +39,7 @@ const HeaderComponent = () => {
                 {user.firstName + ' '+ user.lastName}
               </Title>
               <Space>
-                <Button href="/login" className={styles.button} type="text" ghost>
+                <Button className={styles.button} type="text" ghost onClick={handleLogout}>
                   Log Out
                 </Button>
               </Space>

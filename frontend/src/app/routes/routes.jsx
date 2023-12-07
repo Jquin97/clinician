@@ -19,18 +19,20 @@ import ScanResult from '../pages/scanResult/scanResult';
 import TestResultEdit from '../pages/testResult/testResultEdit';
 import PatientMedication from '../pages/medication/PatientMedication';
 import PatientMedicationEdit from '../pages/medication/PatientMedicationEdit';
+import PublicRoutes from './publicRoutes';
 
 const RouteConfig = () => {
+
   return (
     <QueryProvider>
       <AuthProvider>
         <GlobalProvider>
           <Router>
             <Routes>
-              <Route path="*" element={<Navigate to="/login" replace />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/forgotPassword" element={<ForgotPassword />} />
-              <Route path="/resetPassword/:token?" element={<ResetPassword />} />
+              <Route path="*" element={ <PublicRoutes element={<Login />}/>} />
+              <Route path="/login" element={ <PublicRoutes element={<Login />}/>} />
+              <Route path="/forgotPassword" element={ <PublicRoutes element={<ForgotPassword />}/>} />
+              <Route path="/resetPassword/:token?" element={ <PublicRoutes element={<ResetPassword />}/>} />
               <Route
                 exact
                 path="/dashboard"
