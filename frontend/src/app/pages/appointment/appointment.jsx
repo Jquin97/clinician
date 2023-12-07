@@ -149,7 +149,7 @@ const Appointment = () => {
 
       {/* Add Appointment */}
       <Drawer
-        title="Add new test results"
+        title="Add appointment"
         width={720}
         onClose={onClose}
         open={open}

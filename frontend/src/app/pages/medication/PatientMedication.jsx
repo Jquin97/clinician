@@ -165,7 +165,7 @@ const PatientMedication = () => {
 
       {/* Add result */}
       <Drawer
-        title="Add new test results"
+        title="Add medication"
         width={720}
         onClose={onClose}
         open={open}
