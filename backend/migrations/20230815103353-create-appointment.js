@@ -9,12 +9,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      symptoms: {
-        type: Sequelize.STRING,
+      date: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
-      notes: {
-        type: Sequelize.STRING,
+      time: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
       PatientId: {

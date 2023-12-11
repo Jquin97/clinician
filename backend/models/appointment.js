@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Appointment.init(
     {
-      symptoms: {
-        type: DataTypes.STRING,
+      date: {
+        type: DataTypes.DATE,
         allowNull: false,
         required: true,
       },
-      notes: {
-        type: DataTypes.STRING,
+      time: {
+        type: DataTypes.TIME,
         allowNull: false,
         required: true,
       },
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Appointment",
-    },
+    }
   );
   return Appointment;
 };

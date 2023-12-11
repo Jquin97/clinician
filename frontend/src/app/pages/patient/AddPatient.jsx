@@ -42,6 +42,7 @@ const AddPatient = () => {
           rules={[{ required: true, message: 'Last Name is required' }]}>
           <Input />
         </Form.Item>
+
         <Form.Item
           label="Date of birth"
           name="dob"

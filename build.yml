@@ -19,7 +19,7 @@ stages:
         pool:
           vmImage: $(vmImageName)
         steps:
-          # TODO: ADD JEST TEST REACT COVERAGE
+         
           - task: PublishBuildArtifacts@1
             inputs:
               pathtoPublish: "$(frontendDirectory)"
