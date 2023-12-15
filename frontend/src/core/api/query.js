@@ -79,6 +79,23 @@ const deleteMedications = (id) => {
   return protectedapiClient.delete(`/medication/entry/${id}`);
 };
 
+// Appointment
+const getAppointments = (patientId) => {
+  return protectedapiClient.get(`/appointment/${patientId}`);
+};
+const getSingleAppointment = (id) => {
+  return protectedapiClient.get(`/appointment/entry/${id}`);
+};
+const updateSingleAppointment = (id, data) => {
+  return protectedapiClient.put(`/appointment/entry/${id}`, data);
+};
+const addAppointments = (patientId, data) => {
+  return protectedapiClient.post(`/appointment/${patientId}`, data);
+};
+const deleteAppointments = (id) => {
+  return protectedapiClient.delete(`/appointment/entry/${id}`);
+};
+
 export {
   getPatients,
   getPatientByID,
@@ -99,6 +116,11 @@ export {
   updateSingleMedication,
   addMedications,
   deleteMedications,
+  getAppointments,
+  getSingleAppointment,
+  updateSingleAppointment,
+  addAppointments,
+  deleteAppointments,
 };
 
 export default QueryProvider;

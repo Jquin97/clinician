@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Login from '../pages/auth/login';
 import ForgotPassword from '../pages/auth/forgotPassword/forgotPassword';
@@ -13,26 +13,31 @@ import AddPatient from '../pages/patient/AddPatient';
 import QueryProvider from '../../core/api/query';
 import PatientDetails from '../pages/patientDetails/patientDetails';
 import PatientAction from '../pages/patientAction/patientAction';
-import Appointment from '../pages/appointment/appointment';
 import TestResult from '../pages/testResult/testResult';
 import ScanResult from '../pages/scanResult/scanResult';
 import TestResultEdit from '../pages/testResult/testResultEdit';
 import PatientMedication from '../pages/medication/PatientMedication';
 import PatientMedicationEdit from '../pages/medication/PatientMedicationEdit';
 import PublicRoutes from './publicRoutes';
+import PatientAppointment from '../pages/appointment/PatientAppointment';
 
 const RouteConfig = () => {
-
   return (
     <QueryProvider>
       <AuthProvider>
         <GlobalProvider>
           <Router>
             <Routes>
-              <Route path="*" element={ <PublicRoutes element={<Login />}/>} />
-              <Route path="/login" element={ <PublicRoutes element={<Login />}/>} />
-              <Route path="/forgotPassword" element={ <PublicRoutes element={<ForgotPassword />}/>} />
-              <Route path="/resetPassword/:token?" element={ <PublicRoutes element={<ResetPassword />}/>} />
+              <Route path="*" element={<PublicRoutes element={<Login />} />} />
+              <Route path="/login" element={<PublicRoutes element={<Login />} />} />
+              <Route
+                path="/forgotPassword"
+                element={<PublicRoutes element={<ForgotPassword />} />}
+              />
+              <Route
+                path="/resetPassword/:token?"
+                element={<PublicRoutes element={<ResetPassword />} />}
+              />
               <Route
                 exact
                 path="/dashboard"
@@ -51,7 +56,7 @@ const RouteConfig = () => {
                 exact
                 path="/dashboard/patients/:id/edit"
                 element={<ProtectedRoute element={<PatientAction />} />}></Route>
-              <Route exact path="/dashboard/appointment/:id" element={<Appointment />} />
+              <Route exact path="/dashboard/appointment/:id" element={<PatientAppointment />} />
               <Route exact path="/dashboard/test-result/:id" element={<TestResult />} />
               <Route
                 exact

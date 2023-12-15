@@ -26,6 +26,7 @@ const getPatientAppointments = async (req, res) => {
 };
 const getPatientAppointment = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   try {
     if (!id) {
       return res.send({
@@ -139,13 +140,6 @@ const addPatientAppointment = async (req, res) => {
       return res.send({
         success: false,
         message: "Patient ID not found",
-      });
-    }
-    const { treatment } = req.body;
-    if (!treatment) {
-      return res.send({
-        success: false,
-        message: "Missing required fields",
       });
     }
     req.body.PatientId = patientID;

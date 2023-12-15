@@ -4,7 +4,7 @@ const AppointmentController = require("../../controllers/appointment");
 const { authorizeMiddleware } = require("../../middlewares/auth_middleware");
 router
   .route("/:patientID")
-  .get(authorizeMiddleware, AppointmentController.getPatientAppointment)
+  .get(authorizeMiddleware, AppointmentController.getPatientAppointments)
   .post(authorizeMiddleware, AppointmentController.addPatientAppointment);
 router
   .route("/entry/:id")
