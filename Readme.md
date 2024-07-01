@@ -1,4 +1,4 @@
-# Devops-clinician-app
+# Azure Devops-clinician-app
 
 To setup the backend, follow these steps:
 
@@ -31,13 +31,15 @@ To setup the backend, follow these steps:
 1. To test the apis install postman from here ( https://www.postman.com/downloads/)
 2. Once you install and login to postman, you can call the api urls and perform testing.
 
-# CI CD
+# Azure DevOps CI CD
 
 - Pipeline
 - Artifacts
 - Release Pipeline
   - Staging
   - Production
+<img width="731" alt="Screenshot 2024-07-01 at 9 32 36 PM" src="https://github.com/liu1597/clinician/assets/48242495/ed30002a-2ca1-4a40-949b-34f9169d3fc7">
+
 
 # Demo User
 
