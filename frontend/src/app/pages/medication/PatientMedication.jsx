@@ -29,7 +29,7 @@ const PatientMedication = () => {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{moment(text).format('DD/MM/YYYY')}</a>,
     },
     {
       title: 'Prescription',
@@ -145,7 +145,7 @@ const PatientMedication = () => {
             <Title level={3}>
               {patientsData.firstName} {patientsData.lastName}
             </Title>
-            <Text>DOB:  {formatDate(patientsData.dob)}</Text> <br></br>
+            <Text>DOB: {formatDate(patientsData.dob)}</Text> <br></br>
             <Text>Gender: {patientsData.gender}</Text> <br></br>
             <Text>Phone: {patientsData.phone}</Text>
           </div>

@@ -15,6 +15,7 @@
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' ",
     "seed": "sequelize db:seed:all",
     "migrate:prod": "npx sequelize db:migrate --env production",
+    "migrate:prod:undo": "npx sequelize db:migrate:undo:all --env production",
     "seed:prod": "npx sequelize db:seed:all  --env production",
     "seed:undo:prod": "npx sequelize db:seed:undo:all  --env production",
     "migrate:staging": "npx sequelize db:migrate --env staging",

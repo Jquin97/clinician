@@ -42,7 +42,7 @@ const TestResult = () => {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{moment(text).format('DD/MM/YYYY')}</a>,
     },
     {
       title: 'Result',

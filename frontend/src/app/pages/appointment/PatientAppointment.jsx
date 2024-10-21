@@ -15,14 +15,11 @@ import {
   TimePicker,
 } from 'antd';
 import styles from '../testResult/testResult.module.css';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   addAppointments,
-  addMedications,
   deleteAppointments,
-  deleteMedications,
   getAppointments,
-  getMedications,
   getPatientByID,
 } from '../../../core/api/query';
 const moment = require('moment');
@@ -43,18 +40,19 @@ const PatientAppointment = () => {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{moment(text).format('DD/MM/YYYY')}</a>,
     },
     {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      render: (text) => <a>{text}</a>,
+      render: (text) => <a>{moment(text).format('DD/MM/YYYY')}</a>,
     },
     {
       title: 'Time',
       dataIndex: 'time',
       key: 'time',
+      render: (text) => <a>{moment(text).format('HH:MM')}</a>,
     },
     {
       title: 'Action',
@@ -178,7 +176,7 @@ const PatientAppointment = () => {
 
       {/* Add result */}
       <Drawer
-        title="Add medication"
+        title="Add appointment"
         width={720}
         onClose={onClose}
         open={open}
@@ -200,7 +198,7 @@ const PatientAppointment = () => {
             label="Date"
             name="date"
             rules={[{ required: true, message: 'Date is required' }]}>
-            <DatePicker />
+            <DatePicker disabledDate={(current) => current.valueOf() <= Date.now()} />
           </Form.Item>
           <Form.Item
             label="Time"

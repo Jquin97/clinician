@@ -36,7 +36,7 @@ const DashboardLayout = ({
     const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
     return {
       key: url,
-      title: <Link to={url}>{breadcrumbNameMap[url] ?? 'Default'}</Link>,
+      title: <Link to={url}>{breadcrumbNameMap[url] ?? ''}</Link>,
     };
   });
 
